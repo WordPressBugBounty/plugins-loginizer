@@ -4,7 +4,7 @@ Tags: security, access, admin, Loginizer, login, logs, ban ip, failed login, ip,
 Requires at least: 3.0
 Tested up to: 7.0
 Requires PHP: 5.5
-Stable tag: 2.0.7
+Stable tag: 2.0.8
 License: LGPLv2.1
 License URI: http://www.gnu.org/licenses/lgpl-2.1.html
 
@@ -86,6 +86,10 @@ That's it. You're done!
 3. Loginizer Brute Force Settings page
 
 == Changelog ==
+
+= 2.0.8 =
+* [Improvement Pro] Admin slug htaccess rule, now handles the new slug not having / at the end in the URL.
+* [Improvement] When 2FA is enabled, email notifications will be sent only after successful 2FA verification for both Loginizer and Really Simple Security.
 
 = 2.0.7 =
 * [Improvement Pro] Two Factor Authentication : Enforced 2FA option added for all users.
