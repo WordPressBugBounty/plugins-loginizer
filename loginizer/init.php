@@ -5,7 +5,7 @@ if(!function_exists('add_action')){
 	exit;
 }
 
-define('LOGINIZER_VERSION', '2.0.8');
+define('LOGINIZER_VERSION', '2.0.9');
 define('LOGINIZER_DIR', dirname(LOGINIZER_FILE));
 define('LOGINIZER_URL', plugins_url('', LOGINIZER_FILE));
 define('LOGINIZER_PRO_URL', 'https://loginizer.com/features#compare');
@@ -340,13 +340,13 @@ function loginizer_load_plugin(){
 			add_action('wp_login_failed', 'loginizer_ultimatemember_error_handler', 10001);
 		}
 
-		if(!empty($_COOKIE['lz_social_error']) && !empty($loginizer['social_settings']) && !loginizer_is_blacklisted()){
+		if(!empty($_COOKIE['lz_social_error']) && !empty($loginizer['social_settings'])){
 			add_filter('wp_login_errors', 'loginizer_social_login_error_handler', 10000, 2);
 		}
 	}
 	
 	// Social Login Form Actions
-	if(!empty($loginizer['social_settings']) && !loginizer_is_blacklisted()){
+	if(!empty($loginizer['social_settings'])){
 		if(!empty($loginizer['social_settings']['login']['login_form'])){
 			add_action('login_form', 'loginizer_social_btn_login');
 		}
@@ -807,6 +807,10 @@ function loginizer_ultimatemember_error_handler(){
 // Handles social login URL
 function loginizer_social_login_error_handler($errors = '', $redirect_to = ''){
 	global $loginizer;
+	
+	if(loginizer_is_blacklisted()){
+		return $errors;
+	}
 
 	loginizer_get_social_error();
 

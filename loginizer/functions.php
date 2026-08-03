@@ -641,7 +641,9 @@ function loginizer_add_social_js($page_type){
 }
 
 function loginizer_social_btn_login($return = false, $id = ''){
-	loginizer_social_btn($return, 'login');
+	if(!loginizer_is_blacklisted()){
+		loginizer_social_btn($return, 'login');
+	}
 }
 
 function loginizer_get_social_error(){

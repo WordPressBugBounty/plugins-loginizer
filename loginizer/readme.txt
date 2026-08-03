@@ -4,7 +4,7 @@ Tags: security, access, admin, Loginizer, login, logs, ban ip, failed login, ip,
 Requires at least: 3.0
 Tested up to: 7.0
 Requires PHP: 5.5
-Stable tag: 2.0.8
+Stable tag: 2.0.9
 License: LGPLv2.1
 License URI: http://www.gnu.org/licenses/lgpl-2.1.html
 
@@ -86,6 +86,12 @@ That's it. You're done!
 3. Loginizer Brute Force Settings page
 
 == Changelog ==
+
+= 2.0.9 =
+* [Bug-Fix Pro] There was an issue in Limit Concurrent Attempts, where session was getting destroyed, this has been fixed.
+* [Bug-Fix] Microsoft Graph Social Login, had some issues that has been fixed.
+* [Bug-Fix] Blacklist check function was generating warnings, that has been fixed.
+* [Bug-Fix] There was some PHP 7.0 related button UI issues, those has been fixed.
 
 = 2.0.8 =
 * [Improvement Pro] Admin slug htaccess rule, now handles the new slug not having / at the end in the URL.
