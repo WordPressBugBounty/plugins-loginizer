@@ -4,7 +4,7 @@ Tags: security, access, admin, Loginizer, login, logs, ban ip, failed login, ip,
 Requires at least: 3.0
 Tested up to: 7.1
 Requires PHP: 5.5
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: LGPLv2.1
 License URI: http://www.gnu.org/licenses/lgpl-2.1.html
 
@@ -87,6 +87,10 @@ That's it. You're done!
 3. Loginizer Brute Force Settings page
 
 == Changelog ==
+
+= 2.1.1 =
+* [Improvement Pro] Added Code Signing: Every update now verifies the code signature to ensure secure updates.
+* [Bug-Fix Pro] There was an issue in 2FA when WP Slug access secretly only option was enabled that has been fixed.
 
 = 2.1.0 =
 * [Pro Feature] User enumeration protection, hiding unauthenticated access to username lists.
