@@ -555,10 +555,15 @@ function loginizer_admin_menu() {
 
 	if(defined('LOGINIZER_PREMIUM')){
 		// WAF Security Firewall
-		$expiry_date = strtotime('2026-03-01');
-		$tag_new = time() < $expiry_date ? '<span style="display: inline-block; margin-left: 10px; padding: 0px 5px; color: #fff; background-color: #d63638; border-radius: 2px;">'.__('New', 'loginizer').'</span>' : '';
+		$new_badge = '<span style="display: inline-block; font-size:10px; margin-left: 3px; padding: 0px 5px; color: #fff; background-color: #d63638; border-radius: 5px;">'.__('New', 'loginizer').'</span>';
+		$tag_new = time() < strtotime('2026-03-01') ? $new_badge : '';
 
 		add_submenu_page('loginizer', __('Country Block', 'loginizer'), __('Country Block', 'loginizer').' '.$tag_new, 'activate_plugins', 'loginizer_firewall', 'loginizer_firewall_settings');
+
+		// Login Page Branding, the check keeps an older Pro from fataling on a newer Free
+		if(defined('LOGINIZER_PRO_DIR') && file_exists(LOGINIZER_PRO_DIR . 'main/settings/loginbranding.php')){
+			add_submenu_page('loginizer', __('Login Page Branding', 'loginizer'), __('Login Branding', 'loginizer').(time() < strtotime('2026-11-06') ? ' '.$new_badge : ''), 'activate_plugins', 'loginizer_login_branding', 'loginizer_login_branding_settings');
+		}
 	}
 	
 	// PasswordLess
@@ -767,6 +772,10 @@ function loginizer_social_login_settings(){
 function loginizer_firewall_settings(){
 	include_once LOGINIZER_PRO_DIR . 'main/settings/waf.php';
 	loginizer_pro_firewall();
+}
+
+function loginizer_login_branding_settings(){
+	\LoginizerPro\Settings\LoginBranding::page();
 }
 
 // Hides the interim login poup after successful login.

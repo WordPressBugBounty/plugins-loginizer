@@ -4,7 +4,7 @@ Tags: security, access, admin, Loginizer, login, logs, ban ip, failed login, ip,
 Requires at least: 3.0
 Tested up to: 7.1
 Requires PHP: 5.5
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 License: LGPLv2.1
 License URI: http://www.gnu.org/licenses/lgpl-2.1.html
 
@@ -87,6 +87,10 @@ That's it. You're done!
 3. Loginizer Brute Force Settings page
 
 == Changelog ==
+
+= 2.1.2 =
+* [Pro Feature] Login Page Branding: customize the login page with your logo, colors, background image, a centered or left/right panel layout, a custom message, title and custom CSS.
+* [Bug-Fix Pro] There was an issue which was preventing users from updating user details on Ultimate Member plugin's user account page that has been fixed.
 
 = 2.1.1 =
 * [Improvement Pro] Added Code Signing: Every update now verifies the code signature to ensure secure updates.
