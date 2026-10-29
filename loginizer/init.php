@@ -5,7 +5,7 @@ if(!function_exists('add_action')){
 	exit;
 }
 
-define('LOGINIZER_VERSION', '2.1.2');
+define('LOGINIZER_VERSION', '2.1.3');
 define('LOGINIZER_DIR', dirname(LOGINIZER_FILE));
 define('LOGINIZER_URL', plugins_url('', LOGINIZER_FILE));
 define('LOGINIZER_PRO_URL', 'https://loginizer.com/features#compare');
@@ -685,11 +685,12 @@ function loginizer_login_success($user_login, $user) {
 		return;
 	}
 
-	if(empty($user)){
-		$user = get_user_by('login', $user_login);
+	// Some plugins (e.g. Really Simple Security 2FA) pass the username instead of a WP_User
+	if(!($user instanceof \WP_User)){
+		$user = get_user_by('login', (empty($user_login) && is_string($user)) ? $user : $user_login);
 	}
 
-	if(empty($user)){
+	if(empty($user) || !is_object($user)){
 		error_log('Loginizer: Unable to get the user');
 		return;
 	}
@@ -699,7 +700,7 @@ function loginizer_login_success($user_login, $user) {
 	}
 
 	// Check if the user role is enabled for email notification.
-	if(!array_intersect($user->roles, $loginizer['login_mail']['roles'])){
+	if(empty($user->roles) || !is_array($user->roles) || !array_intersect($user->roles, $loginizer['login_mail']['roles'])){
 		return;
 	}
 

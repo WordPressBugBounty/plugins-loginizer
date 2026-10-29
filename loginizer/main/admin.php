@@ -40,7 +40,7 @@ function loginizer_admin_promo_hooks(){
 		}
 
 		// Are we to disable the promo
-		if(isset($_GET['loginizer_promo']) && (int)$_GET['loginizer_promo'] == 0){
+		if(isset($_GET['loginizer_promo']) && (int)$_GET['loginizer_promo'] == 0 && !empty($_GET['security']) && wp_verify_nonce($_GET['security'], 'loginizer_promo')){
 			update_option('loginizer_promo_time', (0 - time()) );
 			die('DONE');
 		}
@@ -210,7 +210,7 @@ function loginizer_backuply_promo(){
 	}
 	
 	if(isset($_REQUEST['install_backuply'])){
-		if(!wp_verify_nonce($_REQUEST['security'], 'loginizer_install_backuply') || !current_user_can('activate_plugins')){
+		if(!wp_verify_nonce($_REQUEST['security'], 'loginizer_install_backuply') || !current_user_can('install_plugins')){
 			die('Only Admin can access it');
 		}
 
@@ -562,7 +562,11 @@ function loginizer_admin_menu() {
 
 		// Login Page Branding, the check keeps an older Pro from fataling on a newer Free
 		if(defined('LOGINIZER_PRO_DIR') && file_exists(LOGINIZER_PRO_DIR . 'main/settings/loginbranding.php')){
+			
 			add_submenu_page('loginizer', __('Login Page Branding', 'loginizer'), __('Login Branding', 'loginizer').(time() < strtotime('2026-11-06') ? ' '.$new_badge : ''), 'activate_plugins', 'loginizer_login_branding', 'loginizer_login_branding_settings');
+			
+			// Passkeys page
+			add_submenu_page('loginizer', __('Passkey', 'loginizer'), __('Passkeys', 'loginizer').(time() < strtotime('2026-11-06') ? ' '.$new_badge : ''), 'activate_plugins', 'loginizer_passkeys', 'loginizer_passkeys_settings');
 		}
 	}
 	
@@ -697,7 +701,7 @@ jQuery(document).ready( function() {
 			$("#loginizer_promo").hide();
 			
 			// Save this preference
-			$.post("'.admin_url('?loginizer_promo=0').'", data, function(response) {
+			$.post("'.admin_url('?loginizer_promo=0&security='.wp_create_nonce('loginizer_promo')).'", data, function(response) {
 				//alert(response);
 			});
 		});
@@ -776,6 +780,11 @@ function loginizer_firewall_settings(){
 
 function loginizer_login_branding_settings(){
 	\LoginizerPro\Settings\LoginBranding::page();
+}
+
+function loginizer_passkeys_settings(){
+	include_once LOGINIZER_PRO_DIR . 'main/settings/passkeys.php';
+	loginizer_pro_passkey();
 }
 
 // Hides the interim login poup after successful login.
